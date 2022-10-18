@@ -374,7 +374,12 @@ public class Trimmer {
       videoMetadata.putInt("bitrate", bitrate);
       return videoMetadata;
     } finally {
-      retriever.release();
+      // note: temporary fix build error for api 33
+      try {
+        retriever.release();
+      } catch (Exception e) {
+        Log.e(LOG_TAG, "getVideoRequiredMetadata: " + e.getMessage());
+      }
     }
   }
 
